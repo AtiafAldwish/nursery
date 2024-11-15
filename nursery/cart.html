@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <style>
+        /* تنسيق السلة */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+          /* تنسيق الهيدر */
+          .first {
+            background-color: rgb(186, 216, 186);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .first img {
+            margin-left: auto;
+        }
+
+        .first h5 {
+            color: white;
+            margin: 0 50px;
+        }
+
+        /* وضع كلمة "Plant" في المنتصف */
+        .center {
+            flex-grow: 1;
+            text-align: center;
+            color: white;
+        }
+
+        #cart {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        #cart h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #cart ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #cart li {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        #cart button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+        }
+
+        #cart button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="first">
+        <h5>Welcome to Flower Land Nursery</h5>
+        <div class="center">
+            <h5>Plant</h5>
+        </div>
+        <img src="C:\Users\Ad\OneDrive\Desktop\nursery\سلة.jpg" width="50" height="50">
+    </header>
+
+
+<div id="cart">
+    <h3>Your Cart</h3>
+    <ul id="cartItems">
+        <!-- سيتم إضافة العناصر هنا -->
+    </ul>
+    <button onclick="clearCart()">Clear Cart</button>
+</div>
+
+<script>
+    // دالة لعرض السلة
+    function displayCart() {
+        const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartList = document.getElementById('cartItems');
+        cartList.innerHTML = ''; // مسح محتويات السلة الحالية
+        if (cartItems.length === 0) {
+            cartList.innerHTML = '<li>Your cart is empty.</li>';
+        } else {
+            cartItems.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.name} - ${item.price}`;
+                cartList.appendChild(li);
+            });
+        }
+    }
+
+    // دالة لمسح السلة
+    function clearCart() {
+        localStorage.removeItem('cart'); // مسح السلة من LocalStorage
+        displayCart(); // تحديث عرض السلة
+    }
+
+    // عرض السلة عند تحميل الصفحة
+    window.onload = function() {
+        displayCart();
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Page</title>
+
+    <style>
+        /* تنسيق الهيدر */
+        .first {
+            background-color: rgb(186, 216, 186);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .first img {
+            margin-left: auto;
+        }
+
+        .first h5 {
+            color: white;
+            margin: 0 50px;
+        }
+
+        /* وضع كلمة "Plant" في المنتصف */
+        .center {
+            flex-grow: 1;
+            text-align: center;
+            color: white;
+        }
+
+        /* حاوية المنتجات */
+        .product-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .product {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            width: 22%;
+            margin: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .product h4 {
+            color: #333;
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        .product .price {
+            color: #4CAF50;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .product p {
+            color: #555;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+
+        /* تحسين التفاعل مع المنتجات عند المرور على العنصر */
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        /* السلة */
+        #cart {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #cart h3 {
+            text-align: center;
+        }
+
+        #cart ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #cart li {
+            margin-bottom: 10px;
+        }
+
+        #cart button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #cart button:hover {
+            background-color: #45a049;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header class="first">
+    <h5>Welcome to Flower Land Nursery</h5>
+    <div class="center">
+        <h5>Plant</h5>
+    </div>
+
+    <a href="cart.html">
+    <img src="C:\Users\Ad\OneDrive\Desktop\nursery\سلة.jpg" width="50" height="50">
+    </a>
+</header>
+
+<!-- حاوية المنتجات -->
+<div class="product-container">
+    <!-- المنتج الأول -->
+    <div class="product">
+        <img src="C:\Users\Ad\OneDrive\Desktop\nursery\زرع.png" alt="Product 3">
+        <h4>Product 3</h4>
+        <div class="price">$49.99</div>
+        <p>Our premium plant kit includes a selection of rare plants, along with the best tools and supplies for their care.</p>
+        <button onclick="addToCart('Product 3', '$49.99')">Add to Cart</button>
+    </div>
+
+    <!-- المنتج الثاني -->
+    <div class="product">
+        <img src="C:\Users\Ad\OneDrive\Desktop\nursery\زرع2.jpg" alt="Product 2">
+        <h4>Product 2</h4>
+        <div class="price">$19.99</div>
+        <p>This product is perfect for indoor gardening. It comes with everything you need to get started with your plant collection.</p>
+        <button onclick="addToCart('Product 2', '$19.99')">Add to Cart</button>
+    </div>
+
+    <!-- المنتج الثالث -->
+    <div class="product">
+        <img src="C:\Users\Ad\OneDrive\Desktop\nursery\زرع.jpg"alt="Product 1">
+        <h4>Product 1</h4>
+        <div class="price">$29.99</div>
+        <p>This is a great product that will help you with gardening. It’s made with high-quality materials and is designed to last.</p>
+        <button onclick="addToCart('Product 1', '$29.99')">Add to Cart</button>
+    </div>
+</div>
+
+<!-- السلة -->
+<div id="cart">
+    <h3>Your Cart</h3>
+    <ul id="cartItems">
+        <!-- سيتم إضافة العناصر هنا -->
+    </ul>
+    <button onclick="clearCart()">Clear Cart</button>
+</div>
+
+<script>
+ // دالة لإضافة المنتج إلى السلة
+function addToCart(productName, productPrice) {
+    const cartItems = JSON.parse(localStorage.getItem('cart')) || []; // جلب السلة من LocalStorage
+    const product = { name: productName, price: productPrice };
+    cartItems.push(product); // إضافة المنتج إلى السلة
+    localStorage.setItem('cart', JSON.stringify(cartItems)); // حفظ السلة في LocalStorage
+
+    // توجيه المستخدم إلى صفحة السلة
+    window.location.href = 'cart.html'; // فتح صفحة السلة
+}
+
+
+    // دالة لعرض السلة
+    function displayCart() {
+        const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartList = document.getElementById('cartItems');
+        cartList.innerHTML = ''; // مسح محتويات السلة الحالية
+        cartItems.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = `${item.name} - ${item.price}`;
+            cartList.appendChild(li);
+        });
+    }
+
+    // دالة لمسح السلة
+    function clearCart() {
+        localStorage.removeItem('cart'); // مسح السلة من LocalStorage
+        displayCart(); // تحديث عرض السلة
+    }
+
+    // عرض السلة عند تحميل الصفحة
+    window.onload = function() {
+        displayCart();
+    }
+</script>
+
+</body>
+</html>
+
